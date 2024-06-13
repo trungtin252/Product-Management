@@ -35,7 +35,12 @@ app.set("view engine", "pug");
 
 // Flash config
 app.use(cookieParser('KAKAKAWYWTWTAADDNS'));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(session({
+    cookie: { maxAge: 60000 },
+    secret: cookie_secret,
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(flash());
 
 // use routes
