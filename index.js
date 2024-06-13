@@ -37,7 +37,6 @@ app.set("view engine", "pug");
 app.use(cookieParser('KAKAKAWYWTWTAADDNS'));
 app.use(session({
     cookie: { maxAge: 60000 },
-    secret: cookie_secret,
     resave: true,
     saveUninitialized: true
 }));
