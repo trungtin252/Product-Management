@@ -1,0 +1,27 @@
+.container-fluid.d-flex.shadow-sm
+    div.sidebar
+        ul.navbar-nav.justify-content-end.align-center(style='width: 300px')
+            li.nav-item
+                a.nav-link(href='/')
+                    i.bi.bi-house-door.me-2
+                        | Home
+            li.nav-item
+                a.nav-link.active(href=`${prefixAdmin}/dashboard`)
+                    i.bi.bi-speedometer.me-2
+                        | Dashboard
+            li.nav-item
+                a.nav-link(href='/')
+                    i.bi.bi-receipt.me-2
+                        | Oder
+            li.nav-item
+                a.nav-link(href=`${prefixAdmin}/products`)
+                    i.bi.bi-box-seam.me-2
+                        | Product
+            li.nav-item
+                a.nav-link(href='/')
+                    i.bi.bi-person-fill-check
+                        | Account
+            li.nav-item
+                a.nav-link(href='baoloi.html')
+                    i.bi.bi-bug.me-2
+                        | Contact

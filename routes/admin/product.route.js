@@ -1,0 +1,19 @@
+const express = require("express")
+const multer  = require('multer')
+// const upload = multer({ dest: './public/uploads/' })
+const upload = require('../../helpers/storeMuler');
+
+const route = express.Router();
+const controller = require('../../controllers/admin/product.controller')
+
+route.get('/', controller.index)
+
+route.patch("/change-status/:status/:id", controller.changeStatus);
+route.patch("/change-multi", controller.changeMulti);
+route.delete("/delete/:id", controller.deleteItem);
+route.get('/create', controller.create);
+route.post('/create',upload.single("thumbnail"),  controller.createPost);
+route.get("/edit/:id", controller.edit);
+route.patch("/edit/:id",upload.single("thumbnail"), controller.editPatch)
+
+module.exports = route;

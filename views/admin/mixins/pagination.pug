@@ -1,0 +1,13 @@
+mixin pagination(objectPagination)
+  nav
+    - var n = 1;
+    ul.pagination
+        li.page-item
+            if(objectPagination.currentPage > 1)
+                button.page-link(tabindex="-1" aria-disabled="true", value=objectPagination.currentPage - 1) Previous
+        while n <= objectPagination.totalPage
+            li.page-item(class=`${objectPagination.currentPage == n ? "active" : ""}`)
+                button.page-link(value=n)= n++
+        li.page-item
+            if(objectPagination.currentPage < objectPagination.totalPage)
+                button.page-link(value=objectPagination.currentPage + 1) Next

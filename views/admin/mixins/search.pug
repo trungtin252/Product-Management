@@ -1,0 +1,7 @@
+mixin search(keyword)
+    form.row.g-3#form-search
+            .col-auto
+                input.form-control(type="text", value=keyword, placeholder="Nhập từ khóa...", name="keyword")
+            .col-auto
+                button.btn.btn-primary.mb-3(type="submit") 
+                    i.fas.fa-search

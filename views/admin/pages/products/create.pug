@@ -1,0 +1,56 @@
+extends ../../layouts/default.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form_change_multi.pug
+include ../../mixins/alert.pug
+block head
+    link(rel="stylesheet", href="/admin/css/product.css")
+
+block main
+    +alert(messages.success)
+    body
+        main
+            div.content
+                .container
+                    h1 Thêm sản phẩm
+                    form(action=`${prefixAdmin}/products/create`,
+                        id="form-create-product",
+                        method="POST",
+                        enctype="multipart/form-data"
+                        )
+                        .mb-3
+                            label(for="title" class="form-label") Tên sản phẩm
+                            input(type="text" class="form-control" name="title" placeholder="Nhập tên sản phẩm")
+                        .mb-3
+                            label(for="description" class="form-label") Mô tả
+                            input(type="text" class="form-control" name="description" placeholder="Nhập mô tả")
+                        .mb-3
+                            label(for="stock" class="form-label") Số lượng
+                            input(type="number" class="form-control" name="stock" min="1")
+                        .mb-3
+                            label(for="price" class="form-label") Giá bán (VND)
+                            input(type="number" class="form-control" name="price" min="0")
+                        .mb-3
+                            label(for="discountPercentage" class="form-label") Giảm giá (%) 
+                            input(type="number" class="form-control" name="discountPercentage" min="0" step="0.1"   ) 
+                        .mb-3
+                            label(for="position" class="form-label") Vị trí
+                            input(type="number" class="form-control" name="position" min="0" )
+
+                        .mb-3
+                            div(upload-image)
+                                label(for="thumbnail" class="form-label") Hình ảnh
+                                input(type="file" class="form-control" name="thumbnail" accept="image/*" upload-image-input)
+                                img(upload-image-img)
+                        .mb-3
+                            .form-check
+                                input(type="radio" name="status" id="active" value="active" checked)
+                                label(class="form-check-label" for="status") Hoạt động
+                            .form-check
+                                input(type="radio" name="status" id="inactive" value="inactive")
+                                label(class="form-check-label" for="status") Dừng hoạt động
+                        button(type="submit" class="btn btn-primary" id="btn-add") Thêm
+                        button(type="reset" class="btn btn-danger") Reset
+
+
+    script(src="/admin/js/product.js")

@@ -1,0 +1,13 @@
+#product-list{
+    margin: 10px auto;
+    max-width: 70%;
+}
+
+#product-list td img{
+    height: 100px;
+}
+
+.hiden{
+    display: none;
+}
+

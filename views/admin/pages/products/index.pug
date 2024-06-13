@@ -1,0 +1,108 @@
+extends ../../layouts/default.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
+include ../../mixins/form_change_multi.pug
+include ../../mixins/alert.pug
+block head
+    link(rel="stylesheet", href="/admin/css/product.css")
+
+block main
+    +alert(messages.success)
+    body
+        main
+            div.content
+                h1 Danh sách sản phẩm
+                
+                .container
+                    .row
+                        .col
+                            div.filter(style="margin-bottom: 20px")
+                                select.form-select(aria-label="Default select example", style="width: 200px; display: inline;", id="type-filter")
+                                    option(selected ,value="") Tất cả
+                                    option(value="active") Đang hoạt động
+                                    option(value="inactive") Không hoạt động
+                                button.btn.btn-primary(type="button", id="filter-btn", data-bs-toggle="modal", data-bs-target="#filter", onclick="filter()") Lọc
+                        .col
+                            +search(keyword)
+                    .row
+                        .col
+                            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                        .col
+                            a(href=`${prefixAdmin}/products/create`) 
+                                button(type="button" class="btn btn-outline-primary" id="addproduct") + Thêm sản phẩm
+                                
+
+                table.table.table-striped.table-bordered#product-list(checkbox-multi)
+                    thead
+                        tr  
+                            th
+                                input(type="checkbox", name ="checkall")
+                            th(scope="col") STT
+                            th(scope="col") Hình ảnh
+                            th(scope="col") Tiêu đề
+                            th(scope="col") Giá
+                            th(scope="col") Vị trí
+                            th(scope="col") Trạng thái
+                            th(scope="col") Thao tác
+                    tbody.list
+                        each item in products
+                            tr  
+                                td(scope="col")
+                                    input(
+                                        type="checkbox",
+                                        name= "id",
+                                        value=item.id
+                                    )
+                                td(scope="col") #{item.index}
+                                td(scope="col")
+                                    img(src=item.thumbnail, alt= item.title)
+                                td(scope="col") #{item.title}
+                                td(scope="col") #{item.newPrice}
+                                td(scope="col", style="width: 150px")
+                                    input(
+                                        type="number",
+                                        name= "position",
+                                        value=item.position
+                                        min=1
+                                        style="width: 100px"
+                                        )
+                                td(scope="col")
+                                    .status-box
+                                        if(item.status == "active")
+                                            a(  href="javascript:;",
+                                                data-status= item.status,
+                                                data-id-item= item.id
+                                                button-change-status
+                                            )
+                                                span(class="badge bg-success")
+                                                    | Hoạt động
+                                        else
+                                            a(  href="javascript:;",
+                                                data-status= item.status,
+                                                data-id-item= item.id
+                                                button-change-status)
+                                                span(class="badge bg-danger")
+                                                    | Dừng hoạt động
+                                td(scope="col")
+                                    button(class="btn btn-danger", button-delete, data-id=item.id) Xóa
+                                    a(href=`${prefixAdmin}/products/edit/${item.id}`)
+                                        button(class="btn btn-warning") Sửa
+
+
+                .container
+                    +pagination(objectPagination)
+    form.change-status-form(
+        action="",
+        method="POST",
+        data-path=`${prefixAdmin}/products/change-status`
+    )
+
+    form.delete-item-form(
+        action="",
+        method="POST",
+        data-path=`${prefixAdmin}/products/delete`
+    )
+
+    script(src="/admin/js/product.js")
+
+

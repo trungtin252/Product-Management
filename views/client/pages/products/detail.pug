@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+
+block main
+    .container.my-3
+        .row
+            .col-12
+                .box-head
+                    +box-head("Chi tiết sản phẩm")
+        .row
+            .container.mt-5
+                .row
+                    .col-md-6
+                        img(src=products.thumbnail, alt=products.title, class="img-fluid")
+                    .col-md-6
+                        h1 #{products.title}
+                        p.lead #{products.description}
+                    .d-flex.justify-content-between.align-items-center
+                        span.h4 $#{products.price}
+                        if products.discountPercentage
+                            span.text-success #{products.discountPercentage}% off
+                    p.text-muted In stock: #{products.stock}
+                    a.btn.btn-primary(href="#") Add to Cart

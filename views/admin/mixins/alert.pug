@@ -1,0 +1,6 @@
+mixin alert(alertStatuss)
+     if (alertStatuss)
+        div.alert.alert-success(role="alert")
+            span= alertStatuss
+            spane(style="float: right", id= "alert-close") X
+        
