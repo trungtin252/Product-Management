@@ -30,7 +30,7 @@ db.connect();
 
 
 // Using pug premary
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // Flash config
