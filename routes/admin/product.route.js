@@ -1,7 +1,6 @@
 const express = require("express")
 const multer = require('multer')
-const cloudinary = require('cloudinary').v2
-const streamifier = require('streamifier')
+
 // const upload = multer({ dest: './public/uploads/' })
 // const upload = require('../../helpers/storeMuler');
 const upload = multer()

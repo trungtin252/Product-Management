@@ -24,12 +24,25 @@ block main
                                 button.btn.btn-primary(type="button", id="filter-btn", data-bs-toggle="modal", data-bs-target="#filter", onclick="filter()") Lọc
                         .col
                             +search(keyword)
+                        .col
+                            h4 Sắp xếp
+                            
+                            
                     .row
                         .col
                             +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
                         .col
                             a(href=`${prefixAdmin}/products/create`) 
                                 button(type="button" class="btn btn-outline-primary" id="addproduct") + Thêm sản phẩm
+                        .col
+                            select.form-select(aria-label="Default select example", style="width: 200px; display: inline;", id="sort-select")
+                                    option(value="position-desc" selected) Vị trí giảm dần
+                                    option(value="position-asc") Vị trí tăng dần
+                                    option(value="price-desc") Giá cao đến thấp
+                                    option(value="price-asc") Giá thấp đến cao 
+                                    option(value="title-asc") Tiêu đề A - Z
+                                    option(value="title-desc") Tiêu đề Z - A
+                            button.btn.btn-danger(type="button", clear-sort) Clear
                                 
 
                 table.table.table-striped.table-bordered#product-list(checkbox-multi)

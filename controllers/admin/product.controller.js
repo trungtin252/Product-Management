@@ -29,8 +29,21 @@ module.exports.index = async (req, res) => {
 
 
 
+    // Define sort object to custom
+    let sort = {}
+    if (req.query.sortKey) {
+        const sortKey = req.query.sortKey;
+        const sortValue = req.query.sortValue;
+
+        sort[sortKey] = sortValue;
+    }else{
+        sort.price = "desc"
+    }
+
+
+
     const products = await Product.find(find)
-        .sort({ position: "desc" })
+        .sort(sort)
         .limit(objectPagination.limitItems)
         .skip(objectPagination.skip);
 
@@ -108,13 +121,13 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    if(req.body.position == ""){
+    if (req.body.position == "") {
         const countProducts = await Product.countDocuments();
         req.body.position = countProducts + 1;
-    }else{
+    } else {
         req.body.position = parseInt(req.body.position);
     }
-    
+
     const product = new Product(req.body);
     await product.save();
 
@@ -126,14 +139,14 @@ module.exports.createPost = async (req, res) => {
 module.exports.edit = async (req, res) => {
 
     const find = {
-        deleted : false,
+        deleted: false,
         _id: req.params.id
     }
 
     const product = await Product.findOne(find);
     res.render('admin/pages/products/edit', {
         title: "Sửa sản phẩm",
-        product : product
+        product: product
     })
 }
 
@@ -144,22 +157,22 @@ module.exports.editPatch = async (req, res) => {
 
     const id = req.params.id;
 
-    if(req.body.position == ""){
+    if (req.body.position == "") {
         const countProducts = await Product.countDocuments();
         req.body.position = countProducts + 1;
-    }else{
+    } else {
         req.body.position = parseInt(req.body.position);
     }
-    if(req.file){
+    if (req.file) {
         req.body.thumbnail = `/uploads/${req.file.filename}`
     }
     try {
-        await Product.updateOne({  _id : id}, req.body);
+        await Product.updateOne({ _id: id }, req.body);
         req.flash('success', 'Cập nhật thành công !');
     } catch (error) {
         req.flash('error', 'Cập nhật thất bại !');
     }
-    
+
     res.redirect("/admin/products");
 }
 
